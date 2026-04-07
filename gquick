@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Renkler
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+if [ -z "$1" ]; then
+    echo -e "${RED}Hata: Commit mesajı girmediniz.${NC}"
+    echo "Kullanım: gquick \"mesajınız\""
+    exit 1
+fi
+
+echo -e "${BLUE}[1/3]${NC} Dosyalar ekleniyor..."
+git add .
+
+echo -e "${BLUE}[2/3]${NC} Commit atılıyor: $1"
+git commit -m "$1"
+
+echo -e "${BLUE}[3/3]${NC} Push yapılıyor..."
+git push
+
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Başarılı: Değişiklikler gönderildi!${NC}"
+else
+    echo -e "${RED}Hata: Push başarısız oldu.${NC}"
+    exit 1
+fi
